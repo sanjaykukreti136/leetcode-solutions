@@ -1,5 +1,11 @@
 class Solution {
 public:
+    
+    
+    //// https://leetcode.com/problems/count-numbers-with-unique-digits/discuss/83052/Clear-c%2B%2B-explanation-of-combinatorics-using-DP-method
+    
+    
+     /// imp link
     int countNumbersWithUniqueDigits(int n) {
         vector<int>dp(n+1, 0 );
         dp[0] = 1;
