@@ -9,13 +9,9 @@ public:
             return ;
         }else if(i>n || j>m || j>i) return ;
         
-        // if( i>=j ){
-            check(n , m ,i+1 , j , s+'(' , ans);
-            // check(n , m , i , j+1 , s+')' , ans);
-        // }else{
-            check(n , m , i , j+1 , s+')' , ans);
-            // check(n , m , i+1 , j , s+'(' , ans);
-      // /  }
+         check(n , m ,i+1 , j , s+'(' , ans);
+           check(n , m , i , j+1 , s+')' , ans);
+            
         
         
     }
