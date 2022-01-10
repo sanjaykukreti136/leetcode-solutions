@@ -15,7 +15,7 @@ class DSU{
       }
       
       bool isConnect(int a , int b){
-          return find(a)==find(b);
+          return id[find(a)]==id[find(b)];
       }
     
       void reset(int n){
