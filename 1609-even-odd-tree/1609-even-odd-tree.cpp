@@ -1,40 +1,46 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     bool isEvenOddTree(TreeNode* root) {
-        if(!root) return false;
-        queue<TreeNode *>q;
+        if(!root) return true;
+        int k=0;
+        queue<TreeNode* > q;
         q.push(root);
-
-        int lev = 0;
-        while(!q.empty()){
-            int x = q.size();
-            int prev = -1;
-            while(x--){
-                TreeNode *t = q.front();
+        while(!q.empty())
+        {
+            int size=q.size();
+            vector<int> v;
+            while(size--)
+            {
+                auto node=q.front();
                 q.pop();
-                if(lev%2==0){
-                    if((prev!=-1 && t->val<=prev ) || (t->val%2==0) ) return false;
-                }else{
-                    if(prev!=-1 && t->val>=prev || (t->val%2!=0) ) return false;
-                }
-                prev = t->val;
-                if(t->left) q.push(t->left);
-                if(t->right) q.push(t->right);
+                v.push_back(node->val);
+                if(node->left)
+                    q.push(node->left);
+                if(node->right)
+                    q.push(node->right);
             }
-            lev+=1;
+            if(k%2==0)
+            {
+                for(int i=0;i<v.size()-1;i++)
+                {
+                    if(v[i]%2==0) return false;
+                    if(v[i]>=v[i+1]) return false;
+                }
+                if(v[v.size()-1]%2==0) return false;
+            }
+            else if(k%2==1)
+            {
+                for(int i=0;i<v.size()-1;i++)
+                {
+                    if(v[i]%2==1) return false;
+                    if(v[i]<=v[i+1]) return false;
+                }
+                if(v[v.size()-1]%2==1) return false;
+            }
+            //v.clear();
+            //flag!=flag;
+            k++;
         }
         return true;
-        
     }
 };
