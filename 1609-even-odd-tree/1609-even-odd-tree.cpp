@@ -3,6 +3,7 @@ public:
     bool isEvenOddTree(TreeNode* root) {
         if(!root) return true;
         int k=0;
+        bool flag = true;
         queue<TreeNode* > q;
         q.push(root);
         while(!q.empty())
@@ -19,7 +20,7 @@ public:
                 if(node->right)
                     q.push(node->right);
             }
-            if(k%2==0)
+            if(flag)
             {
                 for(int i=0;i<v.size()-1;i++)
                 {
@@ -28,7 +29,7 @@ public:
                 }
                 if(v[v.size()-1]%2==0) return false;
             }
-            else if(k%2==1)
+            else if(!flag)
             {
                 for(int i=0;i<v.size()-1;i++)
                 {
@@ -38,8 +39,9 @@ public:
                 if(v[v.size()-1]%2==1) return false;
             }
             //v.clear();
-            //flag!=flag;
-            k++;
+            flag = flag ? false : true;
+            // flag!=flag;
+            // k++;
         }
         return true;
     }
