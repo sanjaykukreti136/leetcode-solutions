@@ -14,7 +14,7 @@ public:
             if(res.size()==0 || res.size() > ans.size()) res = ans;
             return ;
         }
-        // if(res.size()>0 && ans.size() >= res.size()) return ;
+        if(res.size()>0 && ans.size() >= res.size()) return ;
         
         if(sum & (1<<idx) ){
             check(idx+1 , sum , ans);
