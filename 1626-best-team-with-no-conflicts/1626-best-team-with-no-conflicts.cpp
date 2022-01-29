@@ -1,28 +1,24 @@
 class Solution {
 public:
-    int dp[1005][1005];
     int bestTeamScore(vector<int>& scores, vector<int>& ages) {
-        vector<vector<int>>grp;
-        for(int i=0;i<scores.size();i++)
-        {
-            grp.push_back({scores[i],ages[i]});
+        vector<pair<int,int>>v;
+        for(int i=0;i<ages.size();i++){
+            
+            v.push_back({ages[i], scores[i]});
         }
-        sort(grp.begin(),grp.end());     
-        memset(dp,-1,sizeof(dp));
-        return recur(grp,0,ages.size(),0);
-    }
-    
-    int recur(vector<vector<int>>&grp , int i , int n , int maxiAge)
-    {
-        if(i==n)
-            return 0;
-        if(dp[i][maxiAge]!=-1)
-            return dp[i][maxiAge];
-
-        if(grp[i][1]>=maxiAge)
-        {
-            return dp[i][maxiAge] = max(grp[i][0]+recur(grp,i+1,n,grp[i][1]),recur(grp,i+1,n,maxiAge));
+        int n = ages.size();
+        vector<int>dp(n , 0);
+        int ans = 0;
+        sort(v.begin(), v.end());
+        for(int i=0;i<v.size();i++){
+            dp[i] = v[i].second;
+            for(int j=i-1;j>=0;j--){
+                if(v[i].second>=v[j].second){
+                    dp[i] = max(dp[i] , dp[j] + v[i].second);
+                }
+            }
+            ans = max(ans , dp[i]);
         }
-        return dp[i][maxiAge] = recur(grp,i+1,n,maxiAge);
+        return ans;
     }
 };
