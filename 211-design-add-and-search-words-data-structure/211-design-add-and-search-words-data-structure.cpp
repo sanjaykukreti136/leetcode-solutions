@@ -1,33 +1,68 @@
+struct Trie{
+    Trie *child[26];
+    bool isEnd;
+    
+    Trie(){
+        for(int i=0;i<26;i++){
+            child[i] = NULL;
+        }
+        isEnd = false;
+    }
+};
+
 class WordDictionary {
 public:
-    /** Initialize your data structure here. */
+    Trie *root;
     WordDictionary() {
-        
-    }
-     map<int,vector<string>> m;
-    void addWord(string word) {
-       
-        int len=word.size();
-        m[len].push_back(word);        
+        root = new Trie();
     }
     
-    bool searchHelper(string s1,string s2,int n)
-    {
-        for(int i=0;i<n;i++)
-        {
-            if(s2[i]=='.') continue;
-            if(s1[i]!=s2[i]) return false;
+    void addWord(string word) {
+        Trie *curr = root;
+        for(int i=0;i<word.size();i++){
+          char ch = word[i];
+          if(curr->child[ch-'a']==NULL){
+            curr->child[ch-'a'] = new Trie();
+          }
+          curr = curr->child[ch-'a'];
         }
-        return true;
+        curr->isEnd = true;
+    }
+    
+    bool check(Trie *curr, string s, int idx){
+        
+        if(idx == s.length()){
+            if(curr->isEnd) return true;
+            return false;
+        }
+        
+        
+        char ch = s[idx];
+        if(ch!='.'){
+            if(curr->child[ch-'a']==NULL) return false;
+            return check(curr->child[ch-'a'] , s , idx+1);
+        }else{
+            
+            for(int i=0;i<26;i++){
+                if(curr->child[i]!=NULL){
+                    if(check(curr->child[i] , s , idx+1)==true) return true;
+                }
+            }
+            return false;
+            
+        }
+        
     }
     
     bool search(string word) {
-        int len=word.size();
-        vector<string> str=m[len];
-        for(auto ele : str)
-        {
-            if(searchHelper(ele,word,len)) return true;
-        }
-        return false;
+         Trie *curr = root;
+         return check(curr , word , 0);
     }
 };
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
