@@ -44,7 +44,7 @@ public:
         
         for(int i=0;i<26;i++){
             if(root->child[i]!=NULL && root->child[i]->isEnd ){
-                dfs(root->child[i] , s+arr[i] );
+                dfs(root->child[i] , s+(char)(i+'a') );
             }
         }
         
