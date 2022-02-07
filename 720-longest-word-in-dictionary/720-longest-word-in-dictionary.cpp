@@ -11,7 +11,7 @@ public:
         for(int i=0;i<26;i++)
             child[i]=NULL;
     }
-   
+     ~Trie() {for (int i=0; i<26; i++) if (child[i] != nullptr) delete child[i]; }
     void insert(string word) 
     {
         Trie *curr = this;
