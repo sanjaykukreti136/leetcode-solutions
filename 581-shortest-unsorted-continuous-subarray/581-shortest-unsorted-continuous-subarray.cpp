@@ -15,7 +15,7 @@ public:
         for(auto i : left) cout<<i<<" ";
         cout<<"\n";
         for(auto i : right) cout<<i<<" ";
-        int l=n, r=0;
+        int l=n-1, r=0;
         for(int i=0;i<left.size();i++){
             if(left[i]!=nums[i]){
                 l = i;
@@ -28,7 +28,7 @@ public:
                 break;
             }
         }
-        if(r < l) return 0;
+        if(r <= l) return 0;
         return (r-l+1);
         
         
