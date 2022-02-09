@@ -4,7 +4,7 @@ public:
     queue<pair<int,int>> q;
     void dfs(int sr, int sc,vector<vector<int>>&grid)
     {
-        grid[sr][sc]=-1;
+        grid[sr][sc]=0;
         q.push({sr,sc});
         for(auto ele: dir)
         {
