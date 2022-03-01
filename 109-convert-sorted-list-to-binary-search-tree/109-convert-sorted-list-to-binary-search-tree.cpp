@@ -24,7 +24,7 @@ public:
     TreeNode* helper(ListNode* head, ListNode* tail)
     {
         if(head==tail) return NULL;
-        if(head->next==tail)
+        if(head->next==NULL)
         {
             TreeNode* node= new TreeNode(head->val);
             return node;
