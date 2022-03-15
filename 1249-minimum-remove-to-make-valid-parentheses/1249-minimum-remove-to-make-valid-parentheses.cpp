@@ -1,7 +1,6 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
-        // vector<int>idx;
         map<int, int>m;
         stack<int>st;
         for(int i=0;i<s.size();i++){
