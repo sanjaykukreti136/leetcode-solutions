@@ -1,24 +1,46 @@
 class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& graph) {
-          vector<vector<int>> v(n);
-        vector<int> deg(n, 0), bfs;
-        for(int i=0;i<graph.size();i++){
-            v[graph[i][1]].push_back(graph[i][0]);
-            deg[graph[i][0]]++;
-        }
-        // vector<int>bfs(n);
-        for(int i=0;i<n;i++){
-            if(deg[i]==0) bfs.push_back(i);
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+       if(n==0) return true;
+        vector<vector<int>> graph(n);
+        for(auto ele: prerequisites)
+        {
+            graph[ele[1]].push_back(ele[0]);
         }
         
-        for(int i=0;i<bfs.size();++i){
-            for(auto j : v[bfs[i]]){
-                if(--deg[j]==0){
-                    bfs.push_back(j);
-                }
+        vector<int> indegree(n,0);
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(auto ele: prerequisites[i])
+        //         indegree[ele[0]]++;
+        // }
+        
+        for(auto i : prerequisites){
+            indegree[i[0]]++;
+        }
+        
+        queue<int> q;
+        for(int i=0;i<n;i++)
+        {
+            if(indegree[i]==0)
+                q.push(i);
+        }
+        
+        int cnt=0;
+        stack<int> st;
+        while(!q.empty())
+        {
+            auto node=q.front();
+            q.pop();
+            cnt++;
+            for(auto ele: graph[node])
+            {
+                indegree[ele]--;
+                if(indegree[ele]==0)
+                    q.push(ele);
             }
         }
-        return bfs.size()==n;
+        if(cnt==n) return true;
+        return false;
     }
 };
