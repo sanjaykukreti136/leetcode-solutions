@@ -15,7 +15,7 @@ public:
             sum-=(t/2.0);
             t = (t/2.0);
             c++;
-            cout<<sum<<" "<<t<<"\n";
+            // cout<<sum<<" "<<t<<"\n";
             if(sum<=(s/2.0)) return c;
             pq.push(t);
         }
