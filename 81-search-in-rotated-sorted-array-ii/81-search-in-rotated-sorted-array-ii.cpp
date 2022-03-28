@@ -6,7 +6,6 @@ public:
 
             int mid  = (i+j)/2;
             if(nums[mid]==t) return true;
-            // if( (nums[i] == nums[mid]) && (nums[j] == nums[mid]) ) {++i; --j;}
             if(nums[i] < nums[mid]){
                 if(t>=nums[i] && t<=nums[mid]) j = mid-1;
                 else{
