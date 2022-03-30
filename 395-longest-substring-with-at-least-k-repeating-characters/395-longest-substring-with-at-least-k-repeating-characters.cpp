@@ -1,16 +1,35 @@
 class Solution {
 public:
     int longestSubstring(string s, int k) {
+        
         int ans = 0;
-        for(int i=0;i<s.size();i++){
-            int count = 0;
-            unordered_map<char,int> mp;
-            for(int j=i;j<s.size();j++){
-                mp[s[j]]++;
-                if(mp[s[j]] == k) count++;
-                if(count == mp.size()) ans = max(ans,j-i+1);
+        for(int h=1;h<=26;h++){
+            vector<int>a(26 , 0);
+            
+            int i=0,j=0, ele = 0 , toK = 0;
+            while(j<s.size()){
+                if(ele <= h){
+                    int idx = s[j]-'a';
+                    
+                    if(a[idx]==0) ele++;
+                    a[idx]++;
+                    if(a[idx]==k) toK++;
+                    j++;
+                }else{
+                    int idx = s[i]-'a';
+                    if(a[idx] == k ) toK--;
+                    a[idx]--;
+                    if(a[idx]==0){
+                        ele--;
+                    }
+                    i++;
+                }
+                if(ele == h && ele==toK){
+                ans = max(ans , j-i);
             }
-        }      
+            }
+            
+        }
         return ans;
     }
 };
