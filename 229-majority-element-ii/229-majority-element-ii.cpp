@@ -1,8 +1,16 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        int c1 = 0 , val1 = -1;
-        int c2 = 0 , val2 = -1;
+        int c1 = 0 , val1 = INT_MIN;
+        int c2 = 0 , val2 = INT_MIN;
+        
+        
+         // 1 
+        // x-y   
+         
+//           1 2 
+//           1 -1 
+//           2- 1
         
         for(auto i : nums){
             if(i==val1){
@@ -34,7 +42,7 @@ public:
             ans.push_back(val1);
         }
         c=0;
-        if(val1 == val2) return ans;
+        // if(val1 == val2) return ans;
         for(auto i : nums){
             if(i==val2) c++;
         }
