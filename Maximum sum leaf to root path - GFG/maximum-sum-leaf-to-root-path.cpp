@@ -96,7 +96,7 @@ class Solution{
        
        int l = maxPathSum(root->left);
        int r = maxPathSum(root->right);
-       return max( root->data+l , root->data+r );
+       return root->data + max(l,r);
        
     }
 };
