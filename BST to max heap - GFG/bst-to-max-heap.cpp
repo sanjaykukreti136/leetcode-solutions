@@ -116,14 +116,14 @@ class Solution{
        if(!root) return ;
        check1(root->left , v , i);
        check1(root->right , v , i);
-       root->data = v[++*i];
+       root->data = v[(*i)++];
    }
     void convertToMaxHeapUtil(Node* root)
     {
          Node *temp = root;
          vector<int>in;
          check(root , in);
-         int i = -1;
+         int i = 0;
          check1(root, in  , &i);
     }    
 };
