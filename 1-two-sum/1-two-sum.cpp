@@ -3,16 +3,16 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         map<int,int>m;
         for(int i=0;i<nums.size();i++){
-            m[nums[i]] = i;
+            m[nums[i]] =i ;
         }
-        
+        vector<int>ans;
         for(int i=0;i<nums.size();i++){
-            if(m.find(target - nums[i])!=m.end() && m[target-nums[i]]!=i ){
-                 vector<int>v = { i , m[target-nums[i]] };
-                return v;
+            if(m.find(target-nums[i])!=m.end() && m[target-nums[i]]!=i ){
+                ans.push_back(i);
+                ans.push_back(m[target-nums[i]]);
+                return ans;
             }
         }
-         vector<int>v =  { };
-        return v;
+        return ans;
     }
 };
