@@ -1,34 +1,40 @@
 class Solution {
 public:
     string removeKdigits(string num, int k) {
-        stack<int>s;
-        for(int i=0;i<num.size();i++){
-            int val = num[i]-'0';
-            while(!s.empty() && s.top() > val && k ){
-                s.pop();
-                k-=1;
+        stack<char>st;
+        for(int i=0;i<num.length();i++){
+            if(st.empty() ||  st.top()<=(num[i]) || k==0 ){
+                st.push(num[i]);
+            }else{
+                while(k && !st.empty() && st.top()>num[i]){
+                    st.pop();
+                    k-=1;
+                }
+                st.push(num[i]);
             }
-            
-            if(!s.empty() || val!=0){
-                s.push(val);
-            }
-            
         }
         
-        
-        while(!s.empty() && k){
-            s.pop();
-            k--;
+        // while(!st.empty()){
+        //     cout<<st.top()<<" ";
+        //     st.pop();
+        // }
+        // return "";
+        while(k-- && !st.empty()){
+            st.pop();
         }
-        
-        if(s.empty()) return "0";
-        
-        string ans="";
-        while(!s.empty()){
-            ans = to_string(s.top())+ans;
-            s.pop();
+        string res = "";
+        while(!st.empty()){
+            res.push_back(st.top());
+            st.pop();
         }
+        int idx = 0;
+
+        reverse(res.begin(), res.end());
+        while(idx < res.size() && res[idx]=='0' ){
+            idx++;
+        }
+        string ans = res.substr(idx);
+        if(ans =="") return "0";
         return ans;
-        
     }
 };
