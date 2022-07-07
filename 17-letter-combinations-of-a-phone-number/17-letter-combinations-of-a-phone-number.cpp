@@ -1,24 +1,32 @@
 class Solution {
 public:
-    vector<string>v = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-    void check(string s, int idx , string asf, vector<string>&ans){
-        if(idx==s.length()){
-            ans.push_back(asf);
-            return ;
-        }
-        
-        string t = v[s[idx]-'0'];
-        for(int i=0;i<t.length();i++){
-            check(s , idx+1 , asf+t[i] , ans);
-        }
-        
+    vector<string>codes={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    vector<string> letterCombinations(string s) 
+    {        
+      if(s.size()==0)
+      {
+       vector<string> empty;
+       return empty;
+      }
+  char ch=s[0];
+  string ros=s.substr(1);
+  vector<string>ans=letterCombinations(ros);
+  vector<string>myans;
+  string codeforch=codes[ch-'0'];
+  for(int i=0;i<codeforch.size();i++)
+  {
+    char chcode=codeforch[i];
+     if(ans.size()!=0){
+    for(string j:ans)
+    {
+        myans.push_back(chcode+j);
     }
-    vector<string> letterCombinations(string s) {
-        
-        vector<string>ans;
-        if(s.length()==0) return ans;
-        check(s , 0 , "", ans);
-        return ans;
-        
+     }else{
+         string t="";
+         myans.push_back(chcode+t);
+     }
+  }
+
+  return myans;    
     }
 };
