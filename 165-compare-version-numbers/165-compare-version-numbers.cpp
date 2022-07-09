@@ -1,25 +1,50 @@
 class Solution {
 public:
-    int compareVersion(string s1, string s2) {
-        int i = 0, j = 0;
-        while(s1[i] != '\0' || s2[j] != '\0'){
-            int a = 0, b = 0;
-            while(isdigit(s1[i])){
-                a = a*10 + (s1[i]-'0');
-                i += 1;
+    int compareVersion(string version1, string version2) {
+        vector<int>v1,v2;
+        string temp = "";
+        for(auto i : version1){
+            if(i=='.'){
+                v1.push_back(stoi(temp));
+                temp = "";
+            }else{
+                temp.push_back(i);
             }
-            while(isdigit(s2[j])){
-                b = b*10 + (s2[j]-'0');
-                j += 1;
+        }
+        if(temp.length()!=0){
+            v1.push_back(stoi(temp));
+        }
+        temp = "";
+        for(auto i : version2){
+            if(i=='.'){
+                v2.push_back(stoi(temp));
+                temp = "";
+            }else{
+                temp.push_back(i);
             }
-            if(a < b)
-                return -1;
-            if(a > b)
-                return 1;
-            if(s1[i] == '.')
-                i += 1;
-            if(s2[j] == '.')
-                j += 1;
+        }
+        if(temp.length()!=0){
+            v2.push_back(stoi(temp));
+        }
+        int i=0,j=0;
+        for(auto i : v1) cout<<i<<" ";
+        cout<<"\n";
+        for(auto i : v2) cout<<i<<" ";
+        while(i<v1.size() && j<v2.size()){
+            if(v1[i] > v2[i]) return 1;
+            else if(v1[i]<v2[i]) return -1;
+            else{
+                i++;
+                j++;
+            }
+        }
+        while(i<v1.size()){
+            if(v1[i]>0) return 1;
+            i++;
+        }
+        while(j<v2.size()){
+            if(v2[j]>0) return -1;
+            j++;
         }
         return 0;
     }
