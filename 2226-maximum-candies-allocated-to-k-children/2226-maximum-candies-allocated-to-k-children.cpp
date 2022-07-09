@@ -1,25 +1,35 @@
 class Solution {
 public:
     
-    bool check(vector<int>candies , long long k , long long val){
-        long long c=0;
+    bool check(long long  v , vector<int>&candies , long long k){
+        long long c = 0;
+        // cout<<v<<"\n";
         for(auto i : candies){
-            c+=i/val;
-            if(c>=k) return true;
+            c+=(i/v);
         }
-        return false;
+        return c>=k;
+    }
+    
+    long long sumof(vector<int>&v){
+        int  s = 0;
+        for(auto i : v){
+            s = max(s , i);
+        }
+        return (long long)s;
     }
     
     int maximumCandies(vector<int>& candies, long long k) {
-        long  long  l =0 , h = *max_element(candies.begin(), candies.end());
-        long  long  ans = 0;
-        while(l<=h){
-            long long mid = (l+h)/2;
-            if(mid==0 || check(candies , k , mid)){
-                l = mid+1;
-                ans = mid;
+        long long  s = INT_MAX , e = sumof(candies);
+        
+        s=1;
+        int ans =0 ;
+        while(s<=e){
+            long long  mid = s + (e -s)/2;
+            if(check(mid , candies , k)){
+                ans = max(ans , (int)mid);
+                s = mid+1;
             }else{
-                h  = mid-1;
+                e = mid-1;
             }
         }
         return ans;
