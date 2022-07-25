@@ -1,35 +1,38 @@
-struct Trie{
-    Trie *child[26];
-    bool isEnd;
-    
-    Trie(){
-        for(int i=0;i<26;i++){
-            child[i] = NULL;
-        }
-        isEnd = false;
-    }
-};
-
 class WordDictionary {
 public:
+    
+   class Trie{
+        public :
+         Trie *child[26];
+         bool isEnd;
+        
+        Trie(){
+            for(int i=0;i<26;i++){
+                child[i]=NULL;
+            }
+            isEnd = false;
+        }
+    };
     Trie *root;
     WordDictionary() {
-        root = new Trie();
+          root= new Trie();
     }
     
     void addWord(string word) {
-        Trie *curr = root;
+        
+        Trie *t = root;
         for(int i=0;i<word.size();i++){
-          char ch = word[i];
-          if(curr->child[ch-'a']==NULL){
-            curr->child[ch-'a'] = new Trie();
-          }
-          curr = curr->child[ch-'a'];
+            char ch = word[i];
+            if(t->child[ch-'a']==NULL){
+                t->child[ch-'a'] = new Trie();
+            }
+            t = t->child[ch-'a'];
         }
-        curr->isEnd = true;
+        t->isEnd = true;
+        
     }
     
-    bool check(Trie *curr, string s, int idx){
+      bool check(Trie *curr, string s, int idx){
         
         if(idx == s.length()){
             if(curr->isEnd) return true;
