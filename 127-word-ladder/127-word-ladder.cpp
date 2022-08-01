@@ -18,16 +18,16 @@ public:
             while(x--){
                 string s = q.front();
                 q.pop();
+                if(s == endWord) return d;
                 for(int i=0;i<s.size();i++){
                     string temp = s;
                     for(char j = 'a';j<='z';j++){
                         temp[i] = j;
-                        if(temp.compare(endWord)==0) return d+1;
+ 
                         if(temp.compare(s)==0) continue;
                         if(st.find(temp)!=st.end()){
                             q.push(temp);
                             st.erase(temp);
-                            // break;
                         }
                     }
                 }
