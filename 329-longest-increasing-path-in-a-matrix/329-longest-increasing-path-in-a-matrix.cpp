@@ -1,30 +1,40 @@
 class Solution {
 public:
-    int dp[202][202];
-    int dfs(int sr, int sc, vector<vector<int>>&matrix, int prev)
-    {
-        if(sr<0 or sc<0 or sr==matrix.size() or sc==matrix[0].size() or prev>=matrix[sr][sc]) 
-            return 0;
-        if(dp[sr][sc]!=-1) return dp[sr][sc];
+    int dp[301][301];
+    
+    int check(int r ,int c, vector<vector<int>>&v , int val){
+        // cout<<val<<" ";
+        if(dp[r][c]!=-1) return dp[r][c];
         
-        int a=dfs(sr,sc+1,matrix,matrix[sr][sc]);
-        int b=dfs(sr,sc-1,matrix,matrix[sr][sc]);
-        int c=dfs(sr+1,sc,matrix,matrix[sr][sc]);
-        int d=dfs(sr-1,sc,matrix,matrix[sr][sc]);
+        int ans = 0;
+        if(r-1>=0 && v[r-1][c]>v[r][c] ){
+            ans = max(ans , check(r-1,c,v,dp[r][c]) );
+        }
+        if(r+1 < v.size() && v[r+1][c]>v[r][c]){
+            ans = max(ans , check(r+1,c,v,dp[r][c]) );
+        }
+        if(c+1 < v[0].size() && v[r][c+1]>v[r][c] ){
+            ans = max(ans , check(r,c+1,v,dp[r][c]) );
+        }
+        if(c-1>=0 && v[r][c-1] > v[r][c] ){
+            ans = max(ans , check(r,c-1,v,dp[r][c]) );   
+        }
         
-        return dp[sr][sc]=max({a,b,c,d})+1;
+        return dp[r][c] =   ans+1;
+        
     }
+    
     int longestIncreasingPath(vector<vector<int>>& matrix) {
-        int n=matrix.size(), m=matrix[0].size();
-        memset(dp,-1,sizeof(dp));
-        int cnt=0;
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                cnt=max(cnt,dfs(i,j,matrix,-1));
+        memset(dp , -1, sizeof(dp));
+        int n = matrix.size() , m = matrix[0].size();
+        
+        int res = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                res = max(res , check(i,j,matrix,-1));
+                // cout<<"\n";
             }
         }
-        return cnt;
+        return res;
     }
 };
