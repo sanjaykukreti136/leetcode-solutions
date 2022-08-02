@@ -7,9 +7,9 @@ public:
         using arr = array<int, 3>;
         priority_queue<arr, vector<arr>, greater<arr>> pq;
         vector<int> dist(n, INT_MAX);
-        pq.push({0, src, 0});
+        pq.push({0, 0 , src});
         while (!pq.empty()) {
-            auto [cost, node, stops] = pq.top();
+            auto [cost, stops, node] = pq.top();
             pq.pop();
             if (node == dst) return cost; // if we found destination -> return current cost.
             if (stops > k) continue;
@@ -18,7 +18,7 @@ public:
             if (dist[node] != INT_MAX && dist[node] < stops) continue;
             dist[node] = stops;
             for (auto& [next, price] : adj[node]) {
-                pq.push({cost + price, next, stops + 1});
+                pq.push({cost + price, stops + 1, next});
             }
         }
         return -1;
