@@ -8,7 +8,6 @@ public:
         for(int i= n-1;i>=0;i--){
             int s = 0;
             for(int j=m-1;j>=0;j--){
-                // s+=matrix[i][j]-'0';
                 if(matrix[i][j]=='1') s+=1;
                 else s = 0;
                 dp1[i][j] = s;
@@ -18,7 +17,6 @@ public:
         for(int j=m-1;j>=0;j--){
             int s = 0;
             for(int i=n-1;i>=0;i--){
-                // s+=matrix[i][j]-'0';
                  if(matrix[i][j]=='1') s+=1;
                 else s = 0;
                 dp2[i][j] = s;
@@ -33,10 +31,6 @@ public:
                     if(matrix[i][j]=='1'){
                         
                         dp[i][j] = min( dp1[i][j] , min(dp2[i][j] , dp[i+1][j+1]+1) );
-                        // if(dp1[i+1][j]==dp[i+1][j+1] && dp2[i][j+1]==dp[i+1][j+1]){
-                        //     dp[i][j] = dp1[i+1][j];
-                        // }
-                        // dp[i][j] = max(dp[i][j], 1);
                     }else{
                         dp[i][j] = 0;
                     }
