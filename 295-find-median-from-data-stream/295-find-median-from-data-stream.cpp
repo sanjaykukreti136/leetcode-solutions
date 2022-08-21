@@ -24,17 +24,6 @@ public:
             
         }else{
             
-            if(right.size()==0){
-                if(num >= left.top()){
-                    right.push(num);
-                }else{
-                    int t = left.top();
-                    left.pop();
-                    left.push(num);
-                    right.push(t);
-                }
-            }else{
-                
                 if(num >= left.top()){
                     right.push(num);
                 }else{
@@ -44,7 +33,7 @@ public:
                     right.push(t);
                 }
                 
-            }
+            
             
         }
     }
