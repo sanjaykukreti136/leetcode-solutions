@@ -1,131 +1,136 @@
-
-
 class LRUCache {
 public:
-class node {
-        public:
-            int key;
-            int val;
-            node* next;
-            node* prev;
-        node(int _key, int _val) {
-            key = _key;
-            val = _val; 
-        }
+    
+    class node{
+        public :
+          int key,val;
+          node *next;
+          node *prev;
+          node(int a,  int b){
+              key = a;
+              val = b;
+          }
+        
     };
     
-    node* head = NULL;
-    node* tail = NULL;
+    node *head = NULL;
+    node *tail = NULL;
+    int size = 0;
+    int k;
+    unordered_map<int,node*>m;
     
-    int cap;
-    int size= 0;
-    unordered_map<int, node*>m;
-    
-    void addlast(node *temp){
-        
-        if(size==0){
-            head= tail =  temp;
-            size++;
-            return ;
+    void addLast(node *curr){
+        if(size == 0){
+            head = tail = curr;
+        }else{
+            curr->prev = tail;
+            tail->next = curr;
+            tail = curr;
         }
-        else{
-
-        tail->next  = temp;
-        temp->prev  = tail;
-        tail = temp;
-            size++;
-        }
-        
+        size++;
     }
     
-    void removelast(){
-        if(size==0) return ;
-        else{
-            node *t = tail->prev;
-            t->next = NULL;
-            tail = t;
+    void removeFirst(){
+        if(size==0){}
+        else if(size == 1){
+            head = tail = NULL;
             size--;
-        }
-    }
-    
-    void remove(node *t){
-        if(size== 0){
-            return ;
-        }
-       else if(t==head){
-            removefirst();
-        }
-        else if(t==tail){
-            removelast();
-        }
-        else{
-           node *a  = t->next;
-           node *b  = t->prev;
-           b->next = a;
-            a->prev = b;
-            size--;
-        }
-
-    }
-    
-    void removefirst(){
-        if(size ==0 ) return ;
-        else if(size==1){
-            head= tail  = NULL;
-        }
-        else{
-            node *hn = head->next;
+        }else{
+            node *t = head->next;
             head->next = NULL;
-            hn->prev = NULL;
-            head = hn;
+            t->prev = NULL;
+            head = t;
+            size--;
         }
-        size--;
     }
     
+    void removeLast(){
+        if(size==0){}
+        else if(size==1){
+            head = tail = NULL;
+            size--;
+        }else{
+            node *curr = tail;
+            tail = curr->prev;
+            tail->next = NULL;
+            curr->prev = NULL;
+            size--;
+        }
+    }
+    
+    void remove(node *curr){
+        if(curr==head){
+            removeFirst();
+        }
+        else if(curr==tail){
+            removeLast();
+        }else{
+            node *curr_next = curr->next;
+            node *curr_prev = curr->prev;
+            curr_prev->next = curr_next;
+            curr_next->prev = curr_prev;
+            curr->next = NULL;
+            curr->prev = NULL;
+            size--;
+        }
+    }
     
     
     LRUCache(int capacity) {
-        cap = capacity;
-      
+         k = capacity;
     }
     
+    
+    
     int get(int key) {
-         if(m.find(key)!=m.end()){
-              
-             int ans = m[key]->val;
-             node *t = m[key];
-         //    m.erase(key);
-             remove(t);
-             addlast(t);
-          //   cout<<tail->val<<"  = \n";
-          //   m[key] = t;
-             return ans;
-             
-         }
-         
-         return -1;
+        
+        if(m.find(key)!=m.end()){
+            
+            node *curr = m[key];
+            if(curr==head){
+                removeFirst();
+                addLast(curr);
+            }else if(curr==tail){
+                
+            }else{
+                remove(curr);
+                addLast(curr);
+            }
+            return curr->val;
+        }else{
+            return -1;
+        }
+        
     }
     
     void put(int key, int value) {
-          if(m.find(key)==m.end()){
-              node *newnode = new node(key , value);
-              m[key] = newnode;
-              addlast(newnode);
-              
-              if(size > cap ){
-                  int ke = head->key;
-                  removefirst();
-                  m.erase(ke);
-              }
-              
-          }
-        else{
+        if(m.find(key)!=m.end()){
             node *curr = m[key];
-            remove(curr);
-            addlast(curr);
             curr->val = value;
+            if(curr==head){
+                removeFirst();
+                addLast(curr);
+            }else if(curr==tail){
+                
+            }else{
+                remove(curr);
+                addLast(curr);
+            }
+            
         }
-
+        else{
+            if(size < k){
+                node *curr = new node(key , value);
+                m[key] = curr;
+                addLast(curr);
+            }else{
+                node *curr = new node(key , value);
+                m[key] = curr;
+                m.erase(head->key);
+                removeFirst();
+                addLast(curr);
+            }
+        }
     }
 };
 
