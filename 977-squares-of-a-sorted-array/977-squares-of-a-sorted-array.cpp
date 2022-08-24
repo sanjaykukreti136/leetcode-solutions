@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> sortedSquares(vector<int>& nums) {
-        vector<int>ans;
+         vector<int>ans;
         int i = 0 , j = nums.size()-1;
         while(i<=j){
             if(nums[i]*nums[i] > nums[j]*nums[j]){
