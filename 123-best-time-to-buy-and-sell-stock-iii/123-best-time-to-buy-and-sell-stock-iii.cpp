@@ -1,30 +1,24 @@
 class Solution {
 public:
-    int dp[100006][5];
-    
-    int check(vector<int>&v, int idx  , int k , bool b){
-        if(k==0){
-            return 0;
-        }
-        
-        if(idx == v.size()) return 0;
-        
-        if(dp[idx][k]!=-1) return dp[idx][k];
-        
-        int ans = 0;
-        int ans1 = check(v , idx+1, k , b);
-        if(k%2==0){
-            ans =   ( -v[idx] +  check(v, idx+1, k-1 , false) );
-        }else{
-            ans =   (v[idx] + check(v, idx+1, k-1 , true));
-        }
-        
-        return dp[idx][k] = max(ans , ans1);
-        
-    }
-    
     int maxProfit(vector<int>& prices) {
-        memset(dp , -1 , sizeof(dp));
-        return check(prices , 0 , 4 , false);
+        int n = prices.size();
+        vector<int>left(n,  0);
+        vector<int>right(n,0);
+        int leftmin = prices[0];
+        int rightmax = prices[n-1];
+        for(int i=1;i<n;i++){
+            left[i] = max(left[i-1] , prices[i]-leftmin );
+            leftmin = min(leftmin  , prices[i]);
+        }
+        for(int i=n-2;i>=0;i--){
+            right[i] = max(right[i+1] , rightmax- prices[i] );
+            rightmax = max(rightmax , prices[i]);
+        }
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            ans = max(ans , left[i]+ right[i]);
+        }
+        return ans;
+        
     }
 };
