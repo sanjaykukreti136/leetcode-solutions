@@ -10,87 +10,15 @@
  */
 class Solution {
 public:
-    
-    ListNode *reverse(ListNode *head){
-        ListNode *prev = NULL;
-        while(head){
-            ListNode *t = head->next;
-            head->next = prev;
-            prev = head;
-            head = t;
-        }
-        return prev;
-    }
-    
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *head = NULL;
-        ListNode *temp = NULL;
-        int c = 0;
-        while(l1 && l2){
-            int num = l1->val+ l2->val + c;
-            if(num > 9){
+   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+			if (l1 == NULL and l2 == NULL) return NULL;
+			else if (l1 == NULL) return l2; 
+			else if (l2 == NULL) return l1; 
 
-                c = num/10;
-                num = num%10;
-            }else{
-                c= 0;
-            }
-            ListNode *newnode = new ListNode(num);
-            if(!head){
-                head = temp = newnode;
-            }else{
-                temp->next = newnode;
-                temp = newnode;
-            }
-            l1  = l1->next;
-            l2 = l2->next;
-        }
-        while(l1){
-            int num = l1->val + c;
-            if(num > 9){
-                c = num/10;
-                num = num%10;
-                
-            }else{
-                c= 0;
-            }
-            ListNode *newnode = new ListNode(num);
-            if(!head){
-                head = temp = newnode;
-            }else{
-                temp->next = newnode;
-                temp = newnode;
-            }
-            l1 = l1->next;
-        }
-        while(l2){
-            int num =  l2->val + c;
-            if(num > 9){
-                c = num/10;
-                num = num%10;
-                // c = num/10;
-            }else{
-                c= 0;
-            }
-            ListNode *newnode = new ListNode(num);
-            if(!head){
-                head = temp = newnode;
-            }else{
-                temp->next = newnode;
-                temp = newnode;
-            }
-            l2 = l2->next;
-        }
-        if(c!=0){
-            ListNode *newnode = new ListNode(c);
-            if(!head){
-                head = temp = newnode;
-            }else{
-                temp->next = newnode;
-                temp = newnode;
-            }
-        }
-        return (head);
-        
-    }
+			int a = l1->val + l2->val;
+			ListNode *p = new ListNode(a % 10);
+			p->next = addTwoNumbers(l1->next,l2->next);
+			if (a >= 10) p->next = addTwoNumbers(p->next, new ListNode(1));
+			return p;
+		}
 };
