@@ -11,28 +11,44 @@
  */
 class Solution {
 public:
-    
-    TreeNode *check(TreeNode *root){
-        if(!root) return NULL;
-        
-        TreeNode *l = check(root->left);
-        TreeNode *r = check(root->right);
-        
-        TreeNode *t = l;
-        if(t){
-            while(t->right){
-                t = t->right;
+    void flatten(TreeNode *root){
+        stack<TreeNode*>st;
+        st.push(root);
+        if(!root) return ;
+        while(!st.empty()){
+            TreeNode *curr = st.top();
+            st.pop();
+            if(curr->right) st.push(curr->right);
+            if(curr->left) st.push(curr->left);
+            if(!st.empty()){
+                curr->right = st.top();
+                
             }
-            t->right = r;
-            root->right = l;
-        }else{
-            root->right = r;
+            curr->left = NULL;
+            
         }
-        root->left = NULL;
-        return root;
     }
+//     TreeNode *check(TreeNode *root){
+//         if(!root) return NULL;
+        
+//         TreeNode *l = check(root->left);
+//         TreeNode *r = check(root->right);
+        
+//         TreeNode *t = l;
+//         if(t){
+//             while(t->right){
+//                 t = t->right;
+//             }
+//             t->right = r;
+//             root->right = l;
+//         }else{
+//             root->right = r;
+//         }
+//         root->left = NULL;
+//         return root;
+//     }
     
-    void flatten(TreeNode* root) {
-        check(root);
-    }
+//     void flatten(TreeNode* root) {
+//         check(root);
+//     }
 };
