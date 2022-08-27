@@ -23,8 +23,8 @@ public:
         l = l<0 ? 0 : l;
         r = r<0 ? 0 : r;
         ans = max(ans , l + r + root->val);
-        ans = max(ans , l + root->val);
-        ans = max(ans , r + root->val);
+        // ans = max(ans , l + root->val);
+        // ans = max(ans , r + root->val);
         return max(l,r) + root->val;
     }
     int maxPathSum(TreeNode* root) {
