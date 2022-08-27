@@ -13,16 +13,17 @@ class Solution {
 public:
     int s=  0;
     
-    void check(TreeNode *root , int val){
-        if(!root) return ;
-        
-        if(val <= root->val) s++;
-        check(root->left , max(val , root->val));
-        check(root->right, max(val , root->val));
+    int check(TreeNode *root , int val){
+        if(!root) return 0 ;
+        int maxv = max(val , root->val);
+        if(root->val >= val){
+            return check(root->left , maxv) + check(root->right , maxv) + 1;
+        }
+        return check(root->left , maxv ) + check(root->right, maxv);
     }
     
     int goodNodes(TreeNode* root) {
-        check(root , INT_MIN);
-        return s;
+      return  check(root , INT_MIN);
+        // return s;
     }
 };
