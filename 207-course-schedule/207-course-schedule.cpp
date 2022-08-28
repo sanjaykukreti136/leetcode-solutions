@@ -5,7 +5,7 @@ public:
         vector<vector<int>> graph(n);
         for(auto ele: prerequisites)
         {
-            graph[ele[1]].push_back(ele[0]);
+            graph[ele[0]].push_back(ele[1]);
         }
         
         vector<int> indegree(n,0);
@@ -16,7 +16,7 @@ public:
         // }
         
         for(auto i : prerequisites){
-            indegree[i[0]]++;
+            indegree[i[1]]++;
         }
         
         queue<int> q;
