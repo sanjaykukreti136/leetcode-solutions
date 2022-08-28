@@ -37,8 +37,7 @@ public:
             if(parent[i]==i) c++;
         }
         if(connections.size() < n-1) return -1;
-        return c==1 ?  0  : c-1;
-        // if()
+        return c-1;
         
         
     }
