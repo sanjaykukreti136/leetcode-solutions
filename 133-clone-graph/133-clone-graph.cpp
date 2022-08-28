@@ -39,11 +39,11 @@ public:
         }
     }
     Node* cloneGraph(Node* node) {
-        if(!node) return NULL;
-       map<Node*,Node*>m;
+       if(!node) return NULL;
+        map<Node*,Node*>m;
         set<Node *>s;
         Node *copy = new Node(node->val);
-        s.insert(copy);
+        s.insert(node);
         m.insert({node , copy});
         for(auto i : node->neighbors){
             if(s.find(i)==s.end()){
