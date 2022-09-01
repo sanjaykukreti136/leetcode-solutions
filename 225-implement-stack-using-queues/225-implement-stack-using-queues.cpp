@@ -3,17 +3,11 @@ public:
     queue<int> q;
    
     void push(int x) {
-        queue<int> temp;
-        while(!q.empty()) {
-            temp.push(q.front());
-            q.pop();
-        }
-        
+        int temp =q.size();
         q.push(x);
-        
-         while(!temp.empty()) {
-            q.push(temp.front());
-            temp.pop();
+        for(int i=0;i<temp;i++){
+            q.push(q.front());
+            q.pop();
         }
     }
     
