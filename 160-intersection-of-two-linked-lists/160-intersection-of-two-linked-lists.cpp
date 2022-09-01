@@ -8,28 +8,38 @@
  */
 class Solution {
 public:
-    int size(ListNode *h){
-        int c=0;
-        while(h){
-            c++;
-            h = h->next;
+    
+    
+    ListNode *detect(ListNode *head){
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while(fast->next && fast->next->next){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow==fast){
+                slow = head;
+                while(slow!=fast){
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow;
+            }
         }
-        return c;
+        return NULL;
     }
+    
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-             unordered_map<ListNode*, int> m ;  //create an unordered map storing addresses of the nodes of the Linked Lists
-        while(headA != NULL)      //scan 1st linked list by incrementing the counter in the map
-        {
-            m[headA]++ ;                      //add the address of the node and increment the count by 1 ;
-            headA=headA->next ;
+        if(!headA || !headB) return NULL;
+        if(headA == headB) return headA;
+        ListNode *temp= headA;
+        while(temp->next){
+            temp = temp->next;
         }
-        while(headB != NULL)    //scan the 2nd linked list by finding the address with the count value in the map greater than 0
-        {
-            if(m[headB]>0)    
-                return headB ;     // returns intersecting node
-            else headB=headB->next ;
-        }
+        temp->next = headB;
         
-        return NULL ; 
+        ListNode *ans =  detect(headA);
+        temp->next = NULL;
+        return ans; 
+        
     }
 };
