@@ -14,11 +14,6 @@ public:
             }
         }
         
-        // while(!st.empty()){
-        //     cout<<st.top()<<" ";
-        //     st.pop();
-        // }
-        // return "";
         while(k-- && !st.empty()){
             st.pop();
         }
