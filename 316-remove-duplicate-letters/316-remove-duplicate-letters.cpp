@@ -11,11 +11,7 @@ public:
         for(int i=0;i<s.length();i++){
             char ch = s[i];
             v[ch-'a']--;
-            if(res.empty()){
-                res.push_back(s[i]);
-                vis[ch-'a'] = true;
-                continue;
-            }
+        
             if(vis[ch-'a']) continue;
             while(ch < res.back() && !res.empty() && v[res.back()-'a']>0 ){
                 
