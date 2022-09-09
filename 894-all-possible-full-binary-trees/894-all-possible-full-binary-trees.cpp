@@ -13,10 +13,10 @@ class Solution {
 public:
     vector<TreeNode*> allPossibleFBT(int n) {
         if(n%2==0) return {};
-        TreeNode *t = new TreeNode(0);
-        
-        if(n==1) return {t};
+        TreeNode *newnode = new TreeNode(0);
+        if(n==1) return {newnode};
         vector<TreeNode *>res;
+        // TreeNode *newnode = new TreeNode(0);
         for(int i=1;i<=n;i++){
             vector<TreeNode*>l = allPossibleFBT(i-1);
             vector<TreeNode*>r = allPossibleFBT(n-i);
@@ -31,8 +31,10 @@ public:
                   }
                 }
             }
+            
         }
         return res;
+        
         
     }
 };
