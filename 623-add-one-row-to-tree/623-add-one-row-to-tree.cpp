@@ -12,39 +12,31 @@
 class Solution {
 public:
     
-    void check(TreeNode *root , int v , int d){
+    void check(TreeNode *root , int val , int d){
+        
         if(!root) return ;
-        
         if(d==2){
+            TreeNode *newnode = new TreeNode(val);
+            TreeNode *newnode1 = new TreeNode(val);
             
-            TreeNode *for_left = new TreeNode(v);
-            TreeNode *for_right = new TreeNode(v);
-            
-            TreeNode *root_left = root->left;
-            root->left = for_left;
-            for_left->left = root_left;
-            
-            TreeNode *root_right = root->right;
-            root->right = for_right;
-            for_right->right = root_right;
-            
+            newnode->left = root->left;
+            root->left = newnode;
+            newnode1->right = root->right;
+            root->right = newnode1;
+            return ;
         }
-
-        check(root->left , v , d-1);
-        check(root->right , v , d-1);
-        
+        check(root->left , val , d-1);
+        check(root->right , val , d-1);
         
     }
     
     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
-        if(depth==0) return root;
         if(depth==1){
-            TreeNode *t = new TreeNode(val);
-            t->left = root;
-            return t;
+            TreeNode *newnode = new TreeNode(val);
+            newnode->left= root;
+            return newnode;
         }
         check(root , val , depth);
-        
         return root;
     }
 };
