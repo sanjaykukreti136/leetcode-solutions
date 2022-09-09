@@ -15,7 +15,6 @@ public:
         int dis = 0;
         while(!q.empty()){
             int x = q.size();
-            dis++;
             while(x--){
                 int src = q.front().first;
                 int di = q.front().second;
