@@ -22,7 +22,7 @@ public:
             int minv = q.front().second;
             for(int i =0;i<size;i++){
                 TreeNode *t = q.front().first;
-                long long  id = q.front().second - minv;
+                long long  id = q.front().second - minv ;
                 q.pop();
                 if(i==0) first = id;
                 if(i==size-1) last = id;
