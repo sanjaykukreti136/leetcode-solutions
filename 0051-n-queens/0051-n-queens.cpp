@@ -1,45 +1,41 @@
 class Solution {
 public:
-    
-
-void check(vector<vector<char>>&v,int n, int row,vector<int>colo,vector<int>di1,vector<int>di2,vector<vector<string>>&ans){
-    if(row==n){
-        vector<string>tt;
-        for(int i=0;i<n;i++){
-            string s="";
-            for(int j=0;j<n;j++){
-                (v[i][j]=='-') ? s+='.' : s+='Q';
+    vector<vector<string>> ret;
+    bool is_valid(vector<string> &board, int row, int col){
+        // check col
+        for(int i=row;i>=0;--i)
+            if(board[i][col] == 'Q') return false;
+        // check left diagonal
+        for(int i=row,j=col;i>=0&&j>=0;--i,--j)
+            if(board[i][j] == 'Q') return false;
+        //check right diagonal
+        for(int i=row,j=col;i>=0&&j<board.size();--i,++j)
+            if(board[i][j] == 'Q') return false;
+        return true;
+    }
+    void dfs(vector<string> &board, int row){
+        // exit condition
+        if(row == board.size()){
+            ret.push_back(board);
+            return;
+        }
+        // iterate every possible position
+        for(int i=0;i<board.size();++i){
+            if(is_valid(board,row,i)){
+                // make decision
+                board[row][i] = 'Q';
+                // next iteration
+                dfs(board,row+1);
+                // back-tracking
+                board[row][i] = '.';
             }
-            tt.push_back(s);
-        }
-        if(tt.size()>0) ans.push_back(tt);
-        cout<<".\n";
-       return ;
-    }
-    for(int i =0;i<n;i++){
-        if( colo[i]==0 && di1[row+i]==0 && di2[row-i+(n-1)]==0 ){
-            di2[row-i+(n-1)] = 1;
-            di1[row+i] = 1;
-            colo[i] = 1;
-            v[row][i] = 'q';
-            check(v, n,  row+1, colo,di1,di2,ans);
-            v[row][i] = '-';
-            colo[i]= 0;
-            di1[row+i] = 0;
-            di2[row-i+(n-1)] = 0;
         }
     }
-    
-    
-}
-
     vector<vector<string>> solveNQueens(int n) {
-    vector<vector<char>>v(n , vector<char>(n, '-'));
-    vector<int>colo(n, 0);
-    vector<int>di1(2*n-1, 0);
-    vector<int>di2(2*n-1,0);
-    vector<vector<string>>ans;
-    check(v , n, 0 , colo,di1,di2, ans);
-        return ans;
+		// return empty if n <= 0
+        if(n <= 0) return {{}};
+        vector<string> board(n,string(n,'.'));
+        dfs(board,0);
+        return ret;
     }
 };
